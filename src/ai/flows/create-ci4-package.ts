@@ -54,6 +54,7 @@ or
 
 Ensure the generated code is well-structured, follows CI4 best practices, includes comments for clarity, and the described package is properly integrated and functional within the generated application.
 Include a basic '.env' file. If it's a fresh CI4 app, this usually means copying 'env' to '.env' and setting 'CI_ENVIRONMENT = development', and 'app.baseURL'.
+If the package involves database interactions (e.g., models, data storage), include necessary database migration scripts (e.g., in 'app/Database/Migrations/'). Make sure these migrations are functional and follow CodeIgniter conventions.
 `,
 });
 
