@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -12,7 +13,7 @@ import { createCi4Module, type CreateCi4ModuleInput } from '@/ai/flows/create-ci
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, PackagePlus, Sparkles } from 'lucide-react';
 import type { EditorFile, TreeNode } from '@/types';
-import { buildFileTree } from '@/lib/file-utils';
+import { buildFileTree, parseApplicationCode } from '@/lib/file-utils';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
@@ -40,9 +41,11 @@ export default function ModuleCreatorPage() {
       const input: CreateCi4ModuleInput = { moduleDescription, projectName };
       const output = await createCi4Module(input);
       
-      if (output.moduleFiles && output.moduleFiles.length > 0) {
-        setGeneratedFiles(output.moduleFiles);
-        const newTreeNodes = buildFileTree(output.moduleFiles);
+      const parsedFiles = parseApplicationCode(output.applicationCode);
+      setGeneratedFiles(parsedFiles);
+
+      if (parsedFiles.length > 0) {
+        const newTreeNodes = buildFileTree(parsedFiles);
         setTreeNodes(newTreeNodes);
         // Auto-select the first file if available
         if (newTreeNodes.length > 0) {
@@ -53,14 +56,14 @@ export default function ModuleCreatorPage() {
              setSelectedFile({ path: firstNode.children[0].path, content: firstNode.children[0].content });
            }
         }
-        toast({ title: 'Success', description: 'CodeIgniter 4 module created!' });
+        toast({ title: 'Success', description: 'CodeIgniter 4 project scaffold with module created!' });
       } else {
-        toast({ title: 'Notice', description: 'AI generated an empty module.', variant: 'default' });
+        toast({ title: 'Notice', description: 'AI generated an empty or unparsable output.', variant: 'default' });
       }
 
     } catch (error) {
-      console.error('Error creating module:', error);
-      toast({ title: 'Error', description: 'Failed to create module. Please try again.', variant: 'destructive' });
+      console.error('Error creating project with module:', error);
+      toast({ title: 'Error', description: 'Failed to create project. Please try again.', variant: 'destructive' });
     } finally {
       setIsLoading(false);
     }
@@ -75,10 +78,10 @@ export default function ModuleCreatorPage() {
       <Card className="mb-4 shadow-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-2xl">
-            <PackagePlus className="h-6 w-6 text-primary" /> Module Creator
+            <PackagePlus className="h-6 w-6 text-primary" /> Module-Focused Project Creator
           </CardTitle>
           <CardDescription>
-            Describe the CodeIgniter 4 module you want (e.g., authentication, blog). The AI will generate the necessary files.
+            Describe a CodeIgniter 4 module (e.g., authentication, blog). The AI will generate a full project scaffold with this module integrated, including necessary files and a .env template.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -108,7 +111,7 @@ export default function ModuleCreatorPage() {
             </div>
             <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
               {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-              Create Module
+              Create Project with Module
             </Button>
           </form>
         </CardContent>
@@ -119,7 +122,7 @@ export default function ModuleCreatorPage() {
           <PackagePlus className="h-4 w-4" />
           <AlertTitle>Ready to Create!</AlertTitle>
           <AlertDescription>
-            Describe your module and project name, then click "Create Module".
+            Describe your module and project name, then click "Create Project with Module".
           </AlertDescription>
         </Alert>
       )}
