@@ -141,7 +141,11 @@ export default function PackageCreatorPage() {
           />
         </div>
       </div>
-      <ProjectControls filesToExport={generatedFiles} disableExport={generatedFiles.length === 0} />
+      <ProjectControls 
+        filesToExport={generatedFiles} 
+        disableExport={generatedFiles.length === 0}
+        projectName={projectName} 
+      />
     </div>
   );
 }
