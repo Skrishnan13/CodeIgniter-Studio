@@ -32,13 +32,12 @@ export default function HomePage() {
   return (
     <div className="container mx-auto py-8 px-4">
       <header className="text-center mb-12">
-        <Image 
-          src="https://placehold.co/300x150.png" 
-          alt="CodeIgniter Studio Banner" 
-          width={300} 
-          height={150} 
+        <Image
+          src="https://www.codeigniter.com/assets/icons/ci-logo.png"
+          alt="CodeIgniter Logo"
+          width={128}
+          height={128}
           className="mx-auto mb-6 rounded-lg shadow-lg"
-          data-ai-hint="coding abstract"
         />
         <h1 className="text-5xl font-bold text-primary mb-4">
           Welcome to CodeIgniter Studio

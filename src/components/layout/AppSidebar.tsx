@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Sidebar,
@@ -10,11 +11,11 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
-  SidebarTrigger, // Added import
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Home, LayoutGrid, PackagePlus, Wand2, Settings, Code2, PanelLeft } from "lucide-react";
+import { Home, LayoutGrid, PackagePlus, Wand2, Settings, PanelLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -31,8 +32,14 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" variant="sidebar" side="left">
       <SidebarHeader className="p-4 border-b border-sidebar-border">
         <div className="flex items-center gap-2 ">
-          <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full bg-primary text-primary-foreground group-data-[collapsible=icon]:hidden">
-            <Code2 className="h-5 w-5" />
+          <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full bg-primary text-primary-foreground group-data-[collapsible=icon]:hidden p-1.5">
+            <Image
+              src="https://www.codeigniter.com/assets/icons/ci-logo.png"
+              alt="CodeIgniter Logo"
+              width={20}
+              height={20}
+              className="object-contain"
+            />
           </Button>
            <h2 className="text-lg font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
             CI4 Studio
