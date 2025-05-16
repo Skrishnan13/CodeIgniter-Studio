@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -16,6 +17,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 interface HistoryEntry {
@@ -154,6 +156,7 @@ export default function ConfiguratorPage() {
   };
 
   return (
+    <TooltipProvider>
     <div className="flex flex-col h-full max-h-[calc(100vh-var(--header-height,10rem))]">
       <Card className="mb-4 shadow-sm">
         <CardHeader>
@@ -226,12 +229,26 @@ export default function ConfiguratorPage() {
           <CardFooter className="flex items-center justify-between border-t pt-4">
             <span className="text-sm text-muted-foreground">History: Step {historyIndex + 1} of {history.length}</span>
             <div className="flex gap-2">
-              <Button variant="outline" size="icon" onClick={() => loadHistoryState(historyIndex - 1)} disabled={historyIndex <= 0 || isLoading}>
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="icon" onClick={() => loadHistoryState(historyIndex + 1)} disabled={historyIndex >= history.length - 1 || isLoading}>
-                <ChevronRight className="h-4 w-4" />
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon" onClick={() => loadHistoryState(historyIndex - 1)} disabled={historyIndex <= 0 || isLoading}>
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Previous (Undo)</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon" onClick={() => loadHistoryState(historyIndex + 1)} disabled={historyIndex >= history.length - 1 || isLoading}>
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Next (Redo)</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </CardFooter>
         )}
@@ -263,5 +280,7 @@ export default function ConfiguratorPage() {
       </div>
       <ProjectControls filesToExport={currentFiles} disableExport={currentFiles.length === 0} />
     </div>
+    </TooltipProvider>
   );
 }
+
