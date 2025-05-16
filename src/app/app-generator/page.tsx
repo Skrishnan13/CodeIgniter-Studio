@@ -13,6 +13,7 @@ import { Loader2, Sparkles } from 'lucide-react';
 import type { EditorFile, TreeNode } from '@/types';
 import { buildFileTree, parseApplicationCode } from '@/lib/file-utils';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from '@/lib/utils';
 
 
 export default function AppGeneratorPage() {
