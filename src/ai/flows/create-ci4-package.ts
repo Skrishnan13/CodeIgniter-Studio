@@ -38,6 +38,7 @@ export async function createCi4Package(input: CreateCi4PackageInput): Promise<Cr
 
 const prompt = ai.definePrompt({
   name: 'createCi4PackagePrompt',
+  model: 'googleai/gemini-2.0-flash', // Added model explicitly
   input: {schema: CreateCi4PackageInputSchema},
   output: {schema: CreateCi4PackageOutputSchema},
   prompt: `You are a CodeIgniter 4 expert. You will generate a complete CodeIgniter 4 application scaffold that includes the requested package and a basic .env file (or .env.example if environment-specific secrets are typically involved).
