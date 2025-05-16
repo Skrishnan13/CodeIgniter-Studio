@@ -42,7 +42,7 @@ const prompt = ai.definePrompt({
   input: {schema: CreateCi4PackageInputSchema},
   output: {schema: CreateCi4PackageOutputSchema},
   prompt: `You are an expert CodeIgniter 4 developer. Your task is to generate a complete CodeIgniter 4 application scaffold.
-The 'packageDescription' will contain a detailed specification for an entire application, potentially including multiple modules, database tables, UI components, and specific technology requirements.
+The 'packageDescription' will contain a detailed specification for an entire application, potentially including multiple modules (e.g., users, roles, orders, products), database tables, UI components, and specific technology requirements.
 Your goal is to generate a *complete and functional CodeIgniter 4 project scaffold* based on this entire specification.
 
 Project Name: {{{projectName}}}
@@ -59,8 +59,13 @@ Key requirements for the generated application:
 1.  **Structure and Best Practices**: Ensure the generated code is well-structured, follows CodeIgniter 4 best practices, and includes comments for clarity.
 2.  **Completeness**: The described package/application should be properly integrated and functional within the generated application. Address all major aspects of the 'packageDescription'.
 3.  **.env File**: Include a basic '.env' file. For a fresh CI4 app, this usually means copying 'env' to '.env' and setting 'CI_ENVIRONMENT = development', and 'app.baseURL = http://localhost:8080' (or a relevant placeholder).
-4.  **Database Migrations**: If the 'packageDescription' involves database interactions (e.g., models, data storage, specific table structures), you MUST include necessary CodeIgniter 4 database migration scripts (e.g., in 'app/Database/Migrations/'). These migrations must be functional, follow CodeIgniter conventions, and accurately reflect all specified tables, columns, types, and relationships.
-5.  **Controllers, Models, Views**: Create basic controllers, models, and views for the core modules and functionalities described in the 'packageDescription'.
+4.  **Database Migrations**: If the 'packageDescription' involves database interactions (e.g., models, data storage, specific table structures), you MUST include necessary CodeIgniter 4 database migration scripts (e.g., in 'app/Database/Migrations/'). These migrations must be functional, follow CodeIgniter conventions, and accurately reflect all specified tables, columns, types, and relationships for EVERY module/table described.
+5.  **Controllers, Models, Views, and Routes**: For EACH module or entity described in the 'packageDescription' (e.g., users, roles, orders, products):
+    *   **Models**: Create corresponding Model files (e.g., in 'app/Models/UserModel.php'). Define relationships if specified.
+    *   **Controllers**: Create Controller files (e.g., in 'app/Controllers/UserController.php') with appropriate CRUD methods (index, new/create, store, show, edit, update, delete).
+    *   **Views**: Create basic CodeIgniter 4 View files (PHP files, typically in 'app/Views/ModuleName/list.php', 'app/Views/ModuleName/form.php', 'app/Views/ModuleName/show.php'). These views should handle displaying lists of records, forms for creating/editing records, and showing individual record details. Ensure forms include fields for all relevant model attributes and use appropriate HTML elements (inputs, textareas, selects for foreign keys/enums, checkboxes for booleans).
+    *   **Routes**: Define necessary routes in 'app/Config/Routes.php' to connect the controllers and views. Use resource routing where appropriate.
+    This is critical: ensure ALL FOUR components (Model, View, Controller, Migration) and routes are generated for EACH distinct data entity or module outlined in the 'packageDescription'.
 6.  **Third-Party Libraries**: If specific third-party libraries (PHP like Myth\Auth, DomPDF, PhpSpreadsheet; or JS like FullCalendar.js, Chart.js, jQuery UI, SweetAlert2) are mentioned in the 'packageDescription', attempt to include their basic setup or configuration. This might involve:
     *   For PHP libraries: Suggest 'composer require' commands in a README.md file or in comments within relevant PHP files (e.g., BaseController or specific controllers).
     *   For JS libraries: Suggest CDN links in views, or placeholder comments for asset pipeline integration.
@@ -83,3 +88,4 @@ const createCi4PackageFlow = ai.defineFlow(
     return output!;
   }
 );
+
