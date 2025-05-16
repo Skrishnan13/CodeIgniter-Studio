@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -15,14 +16,14 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Home, LayoutGrid, PackagePlus, Wand2, Settings, PanelLeft } from "lucide-react";
+import { Home, PackagePlus, Settings } from "lucide-react"; // Removed LayoutGrid, Wand2
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/app-generator", label: "App Generator", icon: LayoutGrid },
-  { href: "/module-creator", label: "Module Creator", icon: PackagePlus },
-  { href: "/configurator", label: "Configurator", icon: Wand2 },
+  { href: "/package-creator", label: "Package Creator", icon: PackagePlus },
+  // Removed: App Generator
+  // Removed: Configurator
 ];
 
 export function AppSidebar() {
@@ -80,7 +81,8 @@ export function AppSidebar() {
               tooltip={{ children: "Settings", side: 'right', align: 'center' }}
               className="justify-start"
             >
-              <Link href="#">
+              {/* TODO: Link to an actual settings page if/when created */}
+              <Link href="#"> 
                 <Settings className="h-5 w-5" />
                 <span className="group-data-[collapsible=icon]:hidden">Settings</span>
               </Link>

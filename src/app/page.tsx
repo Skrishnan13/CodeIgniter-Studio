@@ -1,31 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LayoutGrid, PackagePlus, Wand2, ArrowRight } from "lucide-react";
+import { PackagePlus, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 const features = [
   {
-    title: "App Generator",
-    description: "Generate a base CodeIgniter 4 app with folder structure and working code using AI.",
-    href: "/app-generator",
-    icon: <LayoutGrid className="h-8 w-8 text-primary mb-4" />,
-    dataAiHint: "coding computer"
-  },
-  {
-    title: "Module Creator",
-    description: "Create CI4 packages (like auth, blog, API, etc.) with AI assistance.",
-    href: "/module-creator",
+    title: "Package Creator",
+    description: "Describe a CodeIgniter 4 package (like auth, blog, API). AI will generate a full project scaffold with this package integrated, including .env.",
+    href: "/package-creator",
     icon: <PackagePlus className="h-8 w-8 text-primary mb-4" />,
-    dataAiHint: "software module"
-  },
-  {
-    title: "Configurator",
-    description: "Customize routes, models, views, and controllers step-by-step with AI prompts.",
-    href: "/configurator",
-    icon: <Wand2 className="h-8 w-8 text-primary mb-4" />,
-    dataAiHint: "settings configuration"
-  },
+    dataAiHint: "software package"
+  }
 ];
 
 export default function HomePage() {
@@ -38,17 +24,18 @@ export default function HomePage() {
           width={128}
           height={128}
           className="mx-auto mb-6 rounded-lg shadow-lg"
+          data-ai-hint="logo company"
         />
         <h1 className="text-5xl font-bold text-primary mb-4">
           Welcome to CodeIgniter Studio
         </h1>
         <p className="text-xl text-foreground/80 max-w-2xl mx-auto">
-          Your AI-powered assistant for building and configuring CodeIgniter 4 applications with ease.
-          Jumpstart your development, create modules, and customize your project using intuitive AI tools.
+          Your AI-powered assistant for building CodeIgniter 4 application packages.
+          Describe your desired package, and let AI generate a complete project scaffold for you.
         </p>
       </header>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-md mx-auto">
         {features.map((feature) => (
           <Card key={feature.title} className="shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col">
             <CardHeader className="items-center text-center">
@@ -59,6 +46,14 @@ export default function HomePage() {
               <CardDescription className="text-center text-foreground/70 mb-6">
                 {feature.description}
               </CardDescription>
+               <Image 
+                  src="https://placehold.co/600x400.png" 
+                  alt="Package Creator Visual" 
+                  width={600} 
+                  height={400} 
+                  className="rounded-md mb-6"
+                  data-ai-hint={feature.dataAiHint}
+                />
             </CardContent>
             <div className="p-6 pt-0 mt-auto">
               <Link href={feature.href} passHref>
